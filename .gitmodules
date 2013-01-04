@@ -1,3 +1,6 @@
 [submodule "docroot/profiles/sgf_profile"]
 	path = docroot/profiles/sgf_profile
 	url = git@github.com:DrupalSGF/sgf_profile.git
+[submodule "docroot/sites/all/themes/sgf_theme"]
+	path = docroot/sites/all/themes/sgf_theme
+	url = git@github.com:DrupalSGF/sgf_theme.git
