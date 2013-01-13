@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * dsgf_user_roles.features.user_role.inc
+ * dsgf_users.features.user_role.inc
  */
 
 /**
  * Implements hook_user_default_roles().
  */
-function dsgf_user_roles_user_default_roles() {
+function dsgf_users_user_default_roles() {
   $roles = array();
 
   // Exported role: administrator.
