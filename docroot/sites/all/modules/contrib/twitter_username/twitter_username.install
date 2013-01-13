@@ -1,0 +1,21 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the twitter_username module.
+ */
+
+/**
+ * Implements hook_field_schema().
+ */
+function twitter_username_field_schema($field) {
+  return array(
+    'columns' => array(
+      'twitter_username' => array(
+        'type' => 'varchar',
+        'length' => TWITTER_USERNAME_MAX_LENGTH,
+        'not null' => FALSE,
+        'sortable' => TRUE
+      ),
+    ),
+  );
+}
