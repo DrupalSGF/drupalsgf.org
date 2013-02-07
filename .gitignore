@@ -18,3 +18,6 @@ docroot/sites/all/themes/README.txt
 
 # Ignore logs
 logs/
+
+# Ignore Filesystem BS
+.DS_Store
