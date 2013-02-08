@@ -2,33 +2,33 @@
 /**
  * Implements hook_update().
  */
-
 // Enable dsgf_events
-function dsgf_update_7000() {
+function dsgf_helper_update_7000() {
+  $ret = array();
   module_enable(array('dsgf_events'));
   return array();
 }
 
 // Enable dsgf_users
-function dsgf_update_7001() {
+function dsgf_helper_update_7001() {
   module_enable(array('dsgf_users'));
   return array();
 }
 
 // Enable context
-function dsgf_update_7002() {
+function dsgf_helper_update_7002() {
   module_enable(array('context'));
   return array();
 }
 
 // Enable boxes
-function dsgf_update_7003() {
+function dsgf_helper_update_7003() {
   module_enable(array('boxes'));
   return array();
 }
 
 // Set the default frontpage to /events if the dsgf_events feature is enabled.
-function dsgf_update_7004() {
+function dsgf_helper_update_7004() {
   if (module_exists('dsgf_events')) {
     variable_set('site_frontpage', 'events');
   }
