@@ -4,5 +4,6 @@
  * Implements hook_init().
  */
 function dsgf_helper_init() {
-
+  module_enable(array('dsgf_events'));
+  variable_set('site_frontpage', 'events');
 }
