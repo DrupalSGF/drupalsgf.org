@@ -6,9 +6,25 @@
 // Enable dsgf_events
 function dsgf_update_1() {
   module_enable(array('dsgf_events'));
+  return array();
 }
 
 // Enable dsgf_users
 function dsgf_update_2() {
   module_enable(array('dsgf_users'));
+  return array();
 }
+
+// Enable context
+function dsgf_update_3() {
+  module_enable(array('context'));
+  return array();
+}
+
+// Enable boxes
+function dsgf_update_4() {
+  module_enable(array('boxes'));
+  return array();
+}
+
+?>
