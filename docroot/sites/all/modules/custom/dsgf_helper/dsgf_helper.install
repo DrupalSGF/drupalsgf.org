@@ -1,0 +1,14 @@
+<?php
+/**
+ * Implements hook_update().
+ */
+
+// Enable dsgf_events
+function dsgf_update_1() {
+  module_enable(array('dsgf_events'));
+}
+
+// Enable dsgf_users
+function dsgf_update_2() {
+  module_enable(array('dsgf_users'));
+}

@@ -1,0 +1,4 @@
+name = DrupalSGF Helper
+description = Helper functions and update hooks.
+core = 7.x
+package = DrupalSGF
