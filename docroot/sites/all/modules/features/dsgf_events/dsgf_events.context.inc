@@ -22,7 +22,13 @@ function dsgf_events_context_default_contexts() {
         'event' => 'event',
       ),
       'options' => array(
-        'node_form' => '1',
+        'node_form' => '0',
+      ),
+    ),
+    'views' => array(
+      'values' => array(
+        'events' => 'events',
+        'events:page' => 'events:page',
       ),
     ),
   );
