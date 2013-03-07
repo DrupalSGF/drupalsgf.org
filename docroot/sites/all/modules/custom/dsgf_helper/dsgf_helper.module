@@ -4,6 +4,7 @@
  * Implements hook_init().
  */
 function dsgf_helper_init() {
-  module_enable(array('dsgf_events'));
+  // AddThisBlockDateDate APIListOptionsLocation CCKLocation
+  module_enable(array('AddThis','block','date','date_api','list','options','location_cck','location','dsgf_events'));
   variable_set('site_frontpage', 'events');
 }

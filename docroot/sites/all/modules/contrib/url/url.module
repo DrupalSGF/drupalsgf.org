@@ -89,18 +89,19 @@ function url_field_presave($entity_type, $entity, $field, $instance, $langcode, 
   foreach ($items as $delta => &$item) {
     // If the link title is empty, and auto-fetching is enabled, then attempt
     // to extract the title from a request to the URL.
-    if (!empty($settings['title_fetch']) && !empty($item['value']) && empty($item['title'])) {
+    // Skip this process if $entity is empty (field default value form)
+    if (!empty($entity) && !empty($settings['title_fetch']) && !empty($item['value']) && empty($item['title'])) {
       // Parse the URL into a form ready for url().
       $parsed = drupal_parse_url($item['value']);
-      $url = url($parsed['path'], array('query' => $parsed['query'], 'fragment' => $parsed['fragment']));
+      $url = url($parsed['path'], array('query' => $parsed['query'], 'fragment' => $parsed['fragment'], 'absolute' => TRUE));
       $item['title'] = url_fetch_title($url);
     }
 
     // Trim any spaces around the URL title.
-    $item['title'] = trim($item['title']);
+    $item['title'] = isset($item['title']) && is_string($item['title']) ? trim($item['title']) : '';
 
     // Serialize the attributes array.
-    $item['attributes'] = !empty($item['attributes']) ? serialize($item['attributes']) : NULL;
+    $item['attributes'] = !empty($item['attributes']) && is_array($item['attributes']) ? serialize($item['attributes']) : NULL;
   }
 }
 
@@ -179,6 +180,12 @@ function url_field_widget_form($form, &$form_state, $field, $instance, $langcode
     // Add additional styling to make both fields work together visually.
     $element['#attached']['css'][] = drupal_get_path('module', 'url') . '/url.field.css';
   }
+  else {
+    $element['title'] = array(
+      '#type' => 'value',
+      '#default_value' => isset($items[$delta]['title']) ? $items[$delta]['title'] : '',
+    );
+  }
 
   // Exposing the attributes array in the widget is left for alternate and more
   // advanced field widgets.
@@ -186,6 +193,14 @@ function url_field_widget_form($form, &$form_state, $field, $instance, $langcode
     '#type' => 'value',
     '#value' => !empty($items[$delta]['attributes']) ? $items[$delta]['attributes'] : array(),
   );
+
+  // If the widget is being used on a default value form, due to a core bug we
+  // need to set the attributes default value to be an already serialized
+  // value so that it saves properly.
+  // @todo Remove when http://drupal.org/node/1899498 is fixed.
+  if (empty($element['#entity']) && !isset($items[$delta]['attributes'])) {
+    $element['attributes']['#value'] = NULL;
+  }
 
   return $element;
 }
@@ -336,7 +351,7 @@ function url_field_formatter_view($entity_type, $entity, $field, $instance, $lan
 function url_fetch_title($url) {
   $request = drupal_http_request($url);
   if (empty($request->error) && $request->code == 200 && !empty($request->data)) {
-    if (preg_match('!<title>(.*?)</title>!i', $request->data, $matches)) {
+    if (preg_match('!<title>(.*?)</title>!iu', $request->data, $matches)) {
       // Title tags should be encoded, but we want the raw value.
       return decode_entities($matches[1]);
     }
